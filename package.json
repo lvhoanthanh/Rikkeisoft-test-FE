@@ -1,0 +1,153 @@
+{
+  "name": "rikkeisoft",
+  "private": true,
+  "version": "0.0.1",
+  "author": "Phuc Luffy",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/idradigis/pccse-admin-system-webapp/src/main//"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start:dev": "vite --mode dev",
+    "start:prod": "vite --mode prod",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.3.0",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@google-analytics/data": "^4.5.0",
+    "@piotr-cz/redux-persist-idb-storage": "^1.1.3",
+    "@reduxjs/toolkit": "^2.2.0",
+    "@rsuite/icons": "^1.0.3",
+    "@stripe/react-stripe-js": "^2.6.0",
+    "@stripe/stripe-js": "^3.0.8",
+    "@tinymce/tinymce-react": "^4.3.2",
+    "@types/react-file-icon": "^1.0.4",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "antd": "^5.16.0",
+    "antd-img-crop": "^4.21.0",
+    "antd-style": "^3.6.1",
+    "apisauce": "^3.0.1",
+    "chart.js": "^4.2.1",
+    "chartjs-adapter-moment": "^1.0.1",
+    "connected-react-router": "^6.9.2",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.2",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
+    "framer-motion": "^11.0.3",
+    "google-auth-library": "^9.9.0",
+    "history": "^5.3.0",
+    "i18next": "^23.8.2",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "prettier": "^3.2.5",
+    "rc-queue-anim": "^2.0.0",
+    "rc-texty": "^0.2.0",
+    "rc-tween-one": "^3.0.6",
+    "react": "^18.1.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-countup": "^6.5.0",
+    "react-dom": "^18.1.0",
+    "react-file-icon": "^1.4.0",
+    "react-ga": "^3.3.1",
+    "react-helmet": "^6.1.0",
+    "react-highlight-words": "^0.20.0",
+    "react-hot-loader": "^4.13.0",
+    "react-i18next": "^14.0.5",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-player": "^2.15.1",
+    "react-progressive-graceful-image": "^0.7.0",
+    "react-redux": "^9.1.0",
+    "react-responsive": "^9.0.2",
+    "react-reveal": "^1.2.2",
+    "react-router": "^6.4.1",
+    "react-router-dom": "^6.3.0",
+    "react-toastify": "^10.0.4",
+    "redux": "^5.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "redux-state-sync": "^3.1.4",
+    "redux-thunk": "^3.1.0",
+    "rsuite-table": "^5.18.2",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
+    "swiper": "^11.0.5",
+    "write-excel-file": "^1.4.27",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/file-saver": "^2.0.5",
+    "@types/js-cookie": "^3.0.6",
+    "@types/jwt-decode": "^3.1.0",
+    "@types/lodash": "^4.14.181",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.2.19",
+    "@types/react-helmet": "^6.1.11",
+    "@types/react-highlight-words": "^0.16.7",
+    "@types/react-router": "^5.1.18",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/redux-logger": "^3.0.9",
+    "@types/redux-state-sync": "^3.1.8",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-compat": "^4.0.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.6.3",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "husky": "^9.0.10",
+    "react-country-flag": "^3.1.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.1",
+    "vite-plugin-inspect": "^0.8.3",
+    "vite-tsconfig-paths": "^4.3.1"
+  },
+  "devEngines": {
+    "node": ">=16.4.x",
+    "npm": ">=6.x",
+    "yarn": ">=1.22.x"
+  },
+  "engines": {
+    "node": ">=16.4.x",
+    "npm": ">=6.x",
+    "yarn": ">=1.22.x"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": [
+          ".prettierrc",
+          ".babelrc",
+          ".eslintrc",
+          ".stylelintrc"
+        ],
+        "options": {
+          "parser": "json"
+        }
+      }
+    ],
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "license": "LICENSE"
+}

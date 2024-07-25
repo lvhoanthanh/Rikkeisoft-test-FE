@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ES2015"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "pretty": true,
+    "sourceMap": true,
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Module Resolution Options */
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@utils": ["src/Utils"],
+      "@pages": ["src/Pages"],
+      "@constants": ["src/Constants"],
+      "@actions": ["src/Redux/Actions.ts"],
+      "@assets/*": ["src/Assets/*"],
+      "@interfaces/*": ["src/Interfaces/*"],
+      "@store": ["src/Redux/store.ts"],
+      "@common": ["src/Components/Common"],
+      "@dialogs": ["src/Components/Dialogs"],
+      "@tables": ["src/Components/Tables"],
+      "@layouts": ["src/Components/Layouts"],
+      "@hooks": ["src/Hooks"],
+      "@enums": ["src/Constants/Enums"],
+      "@drawers": ["src/Components/Drawers"],
+      "@socket-service": ["src/Configs/socket.config.ts"]
+    },
+    "types": ["vite/client"]
+  },
+  "rules": {
+    "no-unused-vars": "off"
+  },
+  "include": ["src", "vite.config.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
