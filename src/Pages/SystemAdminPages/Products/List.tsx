@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { Col } from 'antd';
-import { CategoryDataTable } from '@tables';
+import { ProductDataTable } from '@tables';
 import { Helmet } from 'react-helmet';
 
-const CategoryList: React.FC = () => {
+const ProductsList: React.FC = () => {
 
   useEffect(() => {
     return () => {
@@ -14,11 +14,11 @@ const CategoryList: React.FC = () => {
   return (
     <Col>
       <Helmet>
-        <title>Categories</title>
+        <title>Products</title>
       </Helmet>
-      <CategoryDataTable />
+      <ProductDataTable />
     </Col>
   );
 };
 
-export default CategoryList;
+export default ProductsList;

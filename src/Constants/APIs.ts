@@ -12,6 +12,10 @@ export default {
   CATEGORY: {
     ROOT: 'categories/',
   },
+
+  PRODUCT: {
+    ROOT: 'products/',
+  },
  
   MEDIA_FILE: {
     ROOT: 'files',

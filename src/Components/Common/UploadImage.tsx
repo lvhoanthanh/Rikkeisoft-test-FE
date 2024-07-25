@@ -63,7 +63,6 @@ const UploadImage: React.FC<IUploadImageProps> = ({
           onPreview={handlePreview}
           maxCount={1}
           key={renderKey}
-          beforeUpload={Utils.validateLimitImageSize}
           accept="image/png, image/jpeg"
           method="POST"
           defaultFileList={file ? [file] : []}

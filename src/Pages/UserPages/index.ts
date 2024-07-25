@@ -1,5 +1,7 @@
-import Dashboard from './Dashboard';
+import Product from './Product';
+import Category from './Category';
 
 export default {
-  Dashboard,
+  Product,
+  Category
 };

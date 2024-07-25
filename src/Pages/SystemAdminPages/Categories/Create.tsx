@@ -104,7 +104,7 @@ const CreateCategory: React.FC = () => {
             title="Are you sure?"
             description={
               <Typography.Text>
-                Your action will create new <b>blog</b> on the system.
+                Your action will create new <b>category</b> on the system.
               </Typography.Text>
             }
             okText="Yes!"

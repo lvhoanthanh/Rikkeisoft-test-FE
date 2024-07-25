@@ -126,7 +126,7 @@ const CategoryDataTable: React.FC = () => {
         <Cell dataKey="name">
           {(rowData: any) => {
             return (
-              <Tooltip title={rowData?.name}>
+              <Tooltip title={'restricted access'}>
                 <Typography.Link
                   ellipsis
                   onClick={() =>
@@ -215,7 +215,7 @@ const CategoryDataTable: React.FC = () => {
               navigate(ROUTERS.ADMIN_CREATE_CATEGORY, { state: filterPayload })
             }
           >
-            Create new category
+            Create denied
           </Button>
         </Divider>
       </Col>

@@ -65,10 +65,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
       />
       <div style={{
         display: 'flex',
-        padding: '30px',
-        fontSize:'20px',
+        padding: '10px',
+        fontSize:'12px',
         cursor: 'pointer',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        background: '#ccc',
+        margin: '10px',
+        placeContent: 'center'
       }}
         onClick={() => dispatch(logout())}>
         Logout

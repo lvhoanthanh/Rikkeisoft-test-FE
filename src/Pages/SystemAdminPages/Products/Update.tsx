@@ -8,13 +8,15 @@ import {
   Divider,
   Form,
   Popconfirm,
+  InputNumber,
+  Select,
 } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { CommonStyles } from '@common';
-import { AP_CategoryActions } from '@actions';
+import { AP_ProductActions } from '@actions';
 import { ROUTERS } from '@constants';
 import { RootState, useTypedDispatch } from '@store';
 import { SaveOutlined, RollbackOutlined } from '@ant-design/icons';
@@ -22,13 +24,17 @@ import { Helmet } from 'react-helmet';
 import { UseMediaQuery } from '@hooks';
 
 type FieldType = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
+  price: number;
+  categoryId: string;
+  file: File;
 };
-const { updateCategory, getCategoryById } = AP_CategoryActions;
 
-const UpdateCategory: React.FC = () => {
+const { updateProduct, getProductById } = AP_ProductActions;
+
+const UpdateProduct: React.FC = () => {
   // Constructors
   const btnStyles = CommonStyles.useButtonBgColor();
   const dispatch = useTypedDispatch();
@@ -37,21 +43,24 @@ const UpdateCategory: React.FC = () => {
   const { id } = useParams();
   const { isMobileLandscape } = UseMediaQuery();
   const isActionLoading: boolean = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'isActionLoading'),
+    _.get(state.AP_PRODUCT, 'isActionLoading'),
   );
   const isGetLoading: boolean = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'isGetLoading'),
+    _.get(state.AP_PRODUCT, 'isGetLoading'),
   );
   const detailStore: any = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'details'),
+    _.get(state.AP_PRODUCT, 'details'),
+  );
+  const categories = useSelector((state: RootState) =>
+    _.get(state.AP_CATEGORY, 'categoriesList', []),
   );
   const [form] = Form.useForm();
-  const [stateDetail, setStateDetail] = useState<FieldType | null>(null);
+  const [stateDetail, setStateDetail] = useState<any | null>(null);
 
   useEffect(() => {
-    if (!id) navigate(ROUTERS.ADMIN_CATEGORY, { state });
-    else dispatch(getCategoryById(id));
-  }, []);
+    if (!id) navigate(ROUTERS.ADMIN_PRODUCT, { state });
+    else dispatch(getProductById(id));
+  }, [id]);
 
   useEffect(() => {
     if (!stateDetail) setStateDetail(detailStore);
@@ -62,25 +71,28 @@ const UpdateCategory: React.FC = () => {
       form.setFieldsValue({
         name: stateDetail?.name,
         description: stateDetail?.description,
+        price: stateDetail?.price,
+        categoryId: stateDetail?.category?.id,
+        file: stateDetail?.image?.path,
       });
     }
   }, [stateDetail]);
 
   // Events
   const onSave = (values: FieldType) => {
-    if (stateDetail)
+    if (stateDetail?.id)
       dispatch(
-        updateCategory(stateDetail?.id, values, () =>
-          navigate(ROUTERS.ADMIN_CATEGORY, { state }),
+        updateProduct(stateDetail?.id, values, () =>
+          navigate(ROUTERS.ADMIN_PRODUCT, { state }),
         ),
       );
   };
-
+  console.log(`${import.meta.env.VITE_BE_URL}storage/${stateDetail?.image?.path}`)
   const _renderForm = () => (
     <Form
       layout={isMobileLandscape ? 'vertical' : 'horizontal'}
       form={form}
-      name="updateCategoryForm"
+      name="updateProductForm"
       wrapperCol={{ span: isMobileLandscape ? 22 : 12, offset: 2 }}
       labelCol={{ span: isMobileLandscape ? 24 : 4 }}
       onFinish={onSave}
@@ -91,7 +103,7 @@ const UpdateCategory: React.FC = () => {
         label="Name"
         name="name"
         style={{ fontWeight: 600 }}
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: 'Please enter the product name' }]}
       >
         <Input />
       </Form.Item>
@@ -104,6 +116,29 @@ const UpdateCategory: React.FC = () => {
         <Input.TextArea rows={4} />
       </Form.Item>
 
+      <Form.Item<FieldType>
+        label="Price"
+        name="price"
+        style={{ fontWeight: 600 }}
+        rules={[{ required: true, message: 'Please enter the product price' }]}
+      >
+        <InputNumber min={0} style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item<FieldType>
+        label="Category"
+        name="categoryId"
+        style={{ fontWeight: 600 }}
+        rules={[{ required: true, message: 'Please select a category' }]}
+      >
+        <Select placeholder="Select a category">
+          {categories.map((category: any) => (
+            <Select.Option key={category.id} value={category.id}>
+              {category.name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
 
       <Form.Item wrapperCol={{ span: 24 }}>
         <Flex justify="center" align="center" gap="middle">
@@ -111,7 +146,7 @@ const UpdateCategory: React.FC = () => {
             danger
             loading={isActionLoading}
             icon={<RollbackOutlined />}
-            onClick={() => navigate(ROUTERS.ADMIN_CATEGORY, { state })}
+            onClick={() => navigate(ROUTERS.ADMIN_PRODUCT, { state })}
           >
             Back to list
           </Button>
@@ -120,8 +155,7 @@ const UpdateCategory: React.FC = () => {
             title="Are you sure?"
             description={
               <Typography.Text>
-                Your action will update <b>{stateDetail?.name}</b> on the
-                system.
+                Your action will update <b>{stateDetail?.name}</b> on the system.
               </Typography.Text>
             }
             okText="Yes!"
@@ -145,11 +179,11 @@ const UpdateCategory: React.FC = () => {
   return (
     <Row style={{ background: 'white' }}>
       <Helmet>
-        <title>Update Category</title>
+        <title>Update Product</title>
       </Helmet>
       <Col span={24}>
         <Divider orientation="left" style={{ fontSize: 20, marginBottom: 0 }}>
-          Update Category
+          Update Product
         </Divider>
       </Col>
       <Col span={24} style={{ padding: '0 2em' }}>
@@ -159,4 +193,4 @@ const UpdateCategory: React.FC = () => {
   );
 };
 
-export default UpdateCategory;
+export default UpdateProduct;

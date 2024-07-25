@@ -7,19 +7,19 @@ import { IFetchData } from '@/Interfaces/FetchData.interface';
 // SINGLE ACTIONS
 const setProductsActionLoading = () => {
   return {
-    type: ACTION_TYPES.SET_PRODUCTS_ACTION_LOADING,
+    type: ACTION_TYPES.SET_PRODUCT_ACTION_LOADING,
   };
 };
 
 const setProductsFetchLoading = () => {
   return {
-    type: ACTION_TYPES.SET_PRODUCTS_FETCH_LOADING,
+    type: ACTION_TYPES.SET_PRODUCT_FETCH_LOADING,
   };
 };
 
 const setProductsGetLoading = () => {
   return {
-    type: ACTION_TYPES.SET_PRODUCTS_GET_LOADING,
+    type: ACTION_TYPES.SET_PRODUCT_GET_LOADING,
   };
 };
 
@@ -33,14 +33,14 @@ const resetProductReducer = () => {
 
 const fetchProductsSuccess = (payload: any) => {
   return {
-    type: ACTION_TYPES.FETCH_PRODUCTS_SUCCESS,
+    type: ACTION_TYPES.FETCH_PRODUCT_SUCCESS,
     payload,
   };
 };
 
 const fetchProductsFailure = () => {
   return {
-    type: ACTION_TYPES.FETCH_PRODUCTS_FAILURE,
+    type: ACTION_TYPES.FETCH_PRODUCT_FAILURE,
   };
 };
 

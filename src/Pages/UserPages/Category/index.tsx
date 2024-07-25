@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { Col } from 'antd';
-import { CategoryDataTable } from '@tables';
+import { CategoryDataTableUser } from '@tables';
 import { Helmet } from 'react-helmet';
 
 const CategoryList: React.FC = () => {
@@ -16,7 +16,7 @@ const CategoryList: React.FC = () => {
       <Helmet>
         <title>Categories</title>
       </Helmet>
-      <CategoryDataTable />
+      <CategoryDataTableUser />
     </Col>
   );
 };

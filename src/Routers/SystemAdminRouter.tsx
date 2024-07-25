@@ -25,10 +25,34 @@ const SystemAdminRouters = {
       ),
     },
     {
+      path: ROUTERS.ADMIN_UPDATE_CATEGORY,
+      element: (
+        <ProtectedRoute location={ROUTERS.ADMIN_UPDATE_CATEGORY}>
+          <SystemAdminPages.Categories.UpdateCategory />
+        </ProtectedRoute>
+      ),
+    },
+    {
       path: ROUTERS.ADMIN_PRODUCT,
       element: (
         <ProtectedRoute location={ROUTERS.ADMIN_PRODUCT}>
-          <SystemAdminPages.Categories.CategoryList />
+          <SystemAdminPages.Products.ProductList />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: ROUTERS.ADMIN_UPDATE_PRODUCT,
+      element: (
+        <ProtectedRoute location={ROUTERS.ADMIN_UPDATE_PRODUCT}>
+          <SystemAdminPages.Products.UpdateProduct />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: ROUTERS.ADMIN_CREATE_PRODUCT,
+      element: (
+        <ProtectedRoute location={ROUTERS.ADMIN_CREATE_PRODUCT}>
+          <SystemAdminPages.Products.CreateProduct />
         </ProtectedRoute>
       ),
     },

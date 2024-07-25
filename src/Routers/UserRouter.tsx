@@ -3,7 +3,7 @@ import { UserPages } from '@pages';
 import ProtectedRoute from './ProtectedRouter';
 import { AdminPortal } from '@layouts';
 
-const SalerRouters = {
+const UserRouters = {
   element: (
       <AdminPortal />
   ),
@@ -12,7 +12,7 @@ const SalerRouters = {
       path: ROUTERS.USER_CATEGORY,
       element: (
         <ProtectedRoute location={ROUTERS.USER_CATEGORY}>
-          <UserPages.Dashboard />
+          <UserPages.Category />
         </ProtectedRoute>
       ),
     },
@@ -20,11 +20,11 @@ const SalerRouters = {
       path: ROUTERS.USER_PRODUCT,
       element: (
         <ProtectedRoute location={ROUTERS.USER_PRODUCT}>
-          <UserPages.Dashboard />
+          <UserPages.Product />
         </ProtectedRoute>
       ),
     },
   ],
 };
 
-export default SalerRouters;
+export default UserRouters;

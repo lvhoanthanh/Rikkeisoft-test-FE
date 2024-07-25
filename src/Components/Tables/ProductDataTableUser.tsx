@@ -7,11 +7,12 @@ import {
   Col,
   Input,
   Button,
-  Flex,
   Typography,
   Popconfirm,
   Tooltip,
   Form,
+  Select,
+  Flex,
 } from 'antd';
 import { RootState, useTypedDispatch } from '@store';
 import { Table, Column, HeaderCell, Cell, SortType } from 'rsuite-table';
@@ -21,7 +22,7 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AP_CategoryActions } from '@actions';
+import { AP_CategoryActions, AP_ProductActions } from '@actions';
 import { CommonStyles, LoadingSpin } from '@common';
 import { IFetchData } from '@/Interfaces/FetchData.interface';
 import PaginateTable from './Pagination';
@@ -30,48 +31,49 @@ import { ROUTERS, DATE_FORMAT } from '@constants';
 import dayjs from 'dayjs';
 import { UseMediaQuery } from '@hooks';
 
-const { fetchCategorys, deleteCategory } =
-AP_CategoryActions;
+const { fetchCategorys } = AP_CategoryActions;
+const { fetchProducts, deleteProduct } = AP_ProductActions;
+const { Option } = Select;
 
-const CategoryDataTable: React.FC = () => {
+const ProductDataTable: React.FC = () => {
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
   const btnStyles = CommonStyles.useButtonBgColor();
   const { isMobileLandscape } = UseMediaQuery();
   const isFetchLoading: boolean = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'isFetchLoading'),
+    _.get(state.AP_PRODUCT, 'isFetchLoading'),
   );
   const isActionLoading: boolean = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'isActionLoading'),
+    _.get(state.AP_PRODUCT, 'isActionLoading'),
   );
   const categoriesList = useSelector((state: RootState) =>
     _.get(state.AP_CATEGORY, 'categoriesList'),
   );
+
+  const productsList = useSelector((state: RootState) =>
+    _.get(state.AP_PRODUCT, 'productsList'),
+  );
+
   const paginate = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'paginate'),
+    _.get(state.AP_PRODUCT, 'paginate'),
   );
   const filterStorage: IFetchData = useSelector((state: RootState) =>
-    _.get(state.AP_CATEGORY, 'filters'),
+    _.get(state.AP_PRODUCT, 'filters'),
   );
   const [tableData, setTableData] = useState([]);
   const [filterPayload, setFilterPayload] = useState<IFetchData>(filterStorage);
   const [form] = Form.useForm();
 
   useEffect(() => {
-    dispatch(fetchCategorys({ ...filterPayload, ...state }));
+    dispatch(fetchProducts({ ...filterPayload, ...state }));
+    dispatch(fetchCategorys({ limit: 100, page: 1 }));
     setFilterPayload({ ...filterPayload, ...state });
-  }, [state]);
+  }, [dispatch, state]);
 
   useEffect(() => {
-    setTableData(categoriesList);
-  }, [categoriesList]);
-
-  // Events
-  
-  useEffect(() => {
-    setTableData(categoriesList);
-  }, [categoriesList]);
+    setTableData(productsList);
+  }, [productsList]);
 
   // Events
   const onFilter = (values: { [key: string]: any }) => {
@@ -81,13 +83,20 @@ const CategoryDataTable: React.FC = () => {
       ...values,
     };
     setFilterPayload(newFilter);
-    dispatch(fetchCategorys(newFilter));
+    dispatch(fetchProducts(newFilter));
   };
 
   const onPaginate = (pagi: { page: number; limit: number }) => {
     const newFilter = { ...filterPayload, ...pagi };
     setFilterPayload(newFilter);
-    dispatch(fetchCategorys(newFilter));
+    dispatch(fetchProducts(newFilter));
+  };
+
+  const handleCategoryChange = (selectedCategories: string[]) => {
+    // Update filterPayload with selected categories
+    const newFilter = { ...filterPayload, categoryIds: selectedCategories, page: 1 };
+    setFilterPayload(newFilter);
+    dispatch(fetchProducts(newFilter));
   };
 
   const _renderTable = () => (
@@ -126,11 +135,11 @@ const CategoryDataTable: React.FC = () => {
         <Cell dataKey="name">
           {(rowData: any) => {
             return (
-              <Tooltip title={rowData?.name}>
+              <Tooltip title={'restricted access'}>
                 <Typography.Link
                   ellipsis
                   onClick={() =>
-                    navigate(`${ROUTERS.ADMIN_CATEGORY}/${rowData?.id}`, {
+                    navigate(`${ROUTERS.ADMIN_PRODUCT}/${rowData?.id}`, {
                       state: filterPayload,
                     })
                   }
@@ -142,9 +151,20 @@ const CategoryDataTable: React.FC = () => {
           }}
         </Cell>
       </Column>
-      
       <Column minWidth={200} flexGrow={1} resizable>
-        <HeaderCell verticalAlign="center">description</HeaderCell>
+        <HeaderCell verticalAlign="center">Category</HeaderCell>
+        <Cell dataKey="category">
+          {(rowData: any) => {
+            return (
+              <Typography.Text ellipsis={{ tooltip: rowData?.category?.name }}>
+                {rowData?.category?.name}
+              </Typography.Text>
+            );
+          }}
+        </Cell>
+      </Column>
+      <Column minWidth={200} flexGrow={1} resizable>
+        <HeaderCell verticalAlign="center">Description</HeaderCell>
         <Cell dataKey="description">
           {(rowData: any) => {
             return (
@@ -174,14 +194,14 @@ const CategoryDataTable: React.FC = () => {
                 title="Are you sure?"
                 description={
                   <Typography.Text>
-                    Your action will delete <b>{rowData?.title}</b> on the
+                    Your action will delete <b>{rowData?.name}</b> on the
                     system.
                   </Typography.Text>
                 }
                 okText="Yes!"
                 showCancel={false}
                 onConfirm={() =>
-                  dispatch(deleteCategory(rowData?.id, filterPayload))
+                  dispatch(deleteProduct(rowData?.id, filterPayload))
                 }
               >
                 <Button
@@ -202,7 +222,7 @@ const CategoryDataTable: React.FC = () => {
     <Row style={{ background: 'white' }}>
       <Col span={24}>
         <Divider orientation="left" style={{ fontSize: 20, marginBottom: 0 }}>
-          Categories List
+          Products List
         </Divider>
         <Divider orientation="right" style={{ marginTop: 0 }}>
           <Button
@@ -212,10 +232,10 @@ const CategoryDataTable: React.FC = () => {
             className={btnStyles.styles.greenBtn}
             icon={<PlusOutlined />}
             onClick={() =>
-              navigate(ROUTERS.ADMIN_CREATE_CATEGORY, { state: filterPayload })
+              navigate(ROUTERS.ADMIN_CREATE_PRODUCT, { state: filterPayload })
             }
           >
-            Create new category
+            Create denied
           </Button>
         </Divider>
       </Col>
@@ -224,18 +244,34 @@ const CategoryDataTable: React.FC = () => {
           form={form}
           disabled={isActionLoading || isFetchLoading}
           onFinish={onFilter}
-          name="categoryFilterForm"
+          name="productFilterForm"
         >
           <Col span={24}>
             <Flex gap={10} wrap="wrap">
               <Form.Item name="keyword" style={{ marginBottom: 0 }}>
                 <Input.Search
-                  placeholder="Search by name of title"
+                  placeholder="Search by name or title"
                   onSearch={() => form.submit()}
                   allowClear
                 />
               </Form.Item>
-              
+
+              <Form.Item name="categoryIds" style={{ marginBottom: 0 }}>
+                <Select
+                  mode="multiple"
+                  placeholder="Select categories"
+                  allowClear
+                  style={{ width: 400 }}
+                  onChange={handleCategoryChange}
+                >
+                  {categoriesList.map((category: any) => (
+                    <Option key={category.id} value={category.id}>
+                      {category.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+
               <Tooltip title="Reset filters">
                 <Button
                   icon={<ReloadOutlined />}
@@ -244,16 +280,16 @@ const CategoryDataTable: React.FC = () => {
                   onClick={() => {
                     form.resetFields();
                     setFilterPayload({ page: 1, limit: 20 });
-                    dispatch(fetchCategorys({ page: 1, limit: 20 }));
+                    dispatch(fetchProducts({ page: 1, limit: 20 }));
                   }}
                 />
               </Tooltip>
-            
+
             </Flex>
           </Col>
         </Form>
       </Col>
-      
+
       <Divider style={{ margin: 0 }} />
       <Col span={24}>{_renderTable()}</Col>
       <Col span={24} style={{ padding: '2em', textAlign: 'right' }}>
@@ -266,4 +302,4 @@ const CategoryDataTable: React.FC = () => {
   );
 };
 
-export default CategoryDataTable;
+export default ProductDataTable;

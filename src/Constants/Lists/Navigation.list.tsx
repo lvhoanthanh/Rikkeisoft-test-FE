@@ -30,12 +30,23 @@ const ADMIN_SIDEBAR = [
 
 const USER_SIDEBAR = [
   {
+    label: 'Product',
+    key: Routers.USER_PRODUCT,
+    icon: (
+      <Avatar
+        shape="square"
+        src="https://img.icons8.com/?size=100&id=aR2Ar4o65ts7&format=png&color=000000"
+        size={20}
+      />
+    ),
+  },
+  {
     label: 'Category',
     key: Routers.USER_CATEGORY,
     icon: (
       <Avatar
         shape="square"
-        src="https://img.icons8.com/officel/30/control-panel.png"
+        src="https://img.icons8.com/?size=100&id=YXWkZzb4J3aD&format=png&color=000000"
         size={20}
       />
     ),
